@@ -171,7 +171,7 @@
                     </button>
                 </div>
 
-                <p>Not a member? <a href="{{route(register)}}" class="theme-color">Sign up now</a></p>
+                <p>Not a member? <a href="{{route('register')}}" class="theme-color">Sign up now</a></p>
             </form>
         </div>
     </div>
