@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function(){
     
     });
     
-    Route::middleware(['auth',"authAdmin"])->group(function(){
+    Route::middleware(['auth',"auth.admin"])->group(function(){
       
         Route::get('/admin',[AdminController::class,'index'])->name('admin.index');
     });
@@ -39,4 +39,6 @@ Route::middleware('auth')->group(function(){
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home',function(){
+    return redirect('/');
+})->name('home');
