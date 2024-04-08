@@ -1,5 +1,8 @@
 @extends('layouts.base')
 
+@push('styles')
+<link id="color-link" rel="stylesheet" type="text/css" href="assets/css/demo2.css">
+@endpush
 
 @section('content')
 
@@ -59,7 +62,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index.htm">
+                            <a href="{{route('app.index')}}">
                                 <i class="fas fa-home"></i>
                             </a>
                         </li>
