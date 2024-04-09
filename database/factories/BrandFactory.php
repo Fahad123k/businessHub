@@ -21,9 +21,9 @@ class BrandFactory extends Factory
         $slug=Str::slug($brand_name);
 
         return [
-            'name'=>Str::title($brand_name),
+           'name'=>Str::title($brand_name),
            'slug'=>$slug,
-           'image'=>$this->faker->numberBetween(1,6).'jpg'
+           'image'=>$this->faker->numberBetween(1,6).'.jpg'
 
         ];
     }
