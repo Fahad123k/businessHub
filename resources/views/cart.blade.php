@@ -108,7 +108,7 @@
                                 <div class="qty-box">
                                     <div class="input-group">
                                         <input type="number" name="quantity" data-rowid="{{$item->rowId}}"
-                                            class="form-control input-number" value="{{$item->qty}}" 
+                                            class="form-control input-number" value="{{$item->qty}}"
                                             onchange="updateQuantity(this)">
                                     </div>
                                 </div>
@@ -117,9 +117,14 @@
                                 <h2 class="td-color">${{$item->subtotal()}}</h2>
                             </td>
                             <td>
-                                <a href="javascript:void(0)">
+                                {{-- cremove item icon --}}
+                                <a href="javascript:void(0)" 
+                                onclick="removeItemFromCart('{{$item->rowId}}');" 
+                           
+                                >
                                     <i class="fas fa-times"></i>
                                 </a>
+                                
                             </td>
                         </tr>
                         @endforeach
@@ -130,7 +135,7 @@
                 <div class="row">
                     <div class="col-sm-7 col-5 order-1">
                         <div class="left-side-button text-end d-flex d-block justify-content-end">
-                            <a href="javascript:void(0)"
+                            <a href="javascript:void(0)"  onclick="clearCart();"
                                 class="text-decoration-underline theme-color d-block text-capitalize">clear
                                 all items</a>
                         </div>
@@ -189,11 +194,25 @@
         </div>
     </div>
 </section>
+
+{{--
+update cart function --}}
 <form action="{{route('cart.update')}}" id="updateCartQty" method="POST">
     @csrf
     @method('put')
     <input type="hidden" id="rowId" name="rowId">
     <input type="hidden" id="quantity" name="quantity">
+</form>
+{{-- remove cart function --}}
+<form action="{{route('cart.remove')}}" id="deleteFromCart" method="POST">
+    @csrf
+    @method('delete')
+    <input type="hidden" id="rowId_D" name="rowId">
+
+</form>
+<form action="{{route('cart.clear')}}" id="clearCart" method="POST">
+    @csrf
+    @method('delete')
 </form>
 @endsection
 
@@ -203,7 +222,22 @@
         $('#rowId').val($(qty).data('rowid'));
         $('#quantity').val($(qty).val());
         $('#updateCartQty').submit();
+        
+    }
+    function test()
+    {
+        alert('testing');
+    }
 
+    function removeItemFromCart(rowId){
+
+        $('#rowId_D').val(rowId);
+        $('#deleteFromCart').submit();
+    }
+
+    function clearCart(rowId){
+        
+        $('#clearCart').submit();
     }
 </script>
 
