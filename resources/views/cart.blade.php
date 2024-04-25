@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
-    
+
 
 <section class="breadcrumb-section section-b-space" style="padding-top:20px;padding-bottom:20px;">
     <ul class="circles">
@@ -33,7 +33,7 @@
                 </nav>
             </div>
         </div>
-            
+
         @else
 
         <div class="row">
@@ -41,10 +41,10 @@
                 <h2>Your cart is empty !</h2>
                 <h5 class="mt-3">Add items to it now.</h5>
                 <a href="{{route('shop.index')}}" class="btn btn-warning mt-5">Show Now</a>
-              
+
             </div>
         </div>
-            
+
         @endif
     </div>
 </section>
@@ -68,17 +68,18 @@
                     <tbody>
 
                         @foreach ($cartItems as $item)
-                            
-                 
+
+
                         <tr>
                             <td>
                                 <a href="{{route('shop.product.details',['slug'=>$item->model->slug])}}">
-                                    <img src="{{asset('assets/images/fashion/product/front')}}/{{$item->model->image}}" class="blur-up lazyloaded"
-                                        alt="{{$item->model->name}}">
+                                    <img src="{{asset('assets/images/fashion/product/front')}}/{{$item->model->image}}"
+                                        class="blur-up lazyloaded" alt="{{$item->model->name}}">
                                 </a>
                             </td>
                             <td>
-                                <a href="{{route('shop.product.details',['slug'=>$item->model->slug])}}">{{$item->model->name}}</a>
+                                <a
+                                    href="{{route('shop.product.details',['slug'=>$item->model->slug])}}">{{$item->model->name}}</a>
                                 <div class="mobile-cart-content row">
                                     <div class="col">
                                         <div class="qty-box">
@@ -106,9 +107,9 @@
                             <td>
                                 <div class="qty-box">
                                     <div class="input-group">
-                                        <input type="number" name="quantity"
-                                            data-rowid="ba02b0dddb000b25445168300c65386d"
-                                            class="form-control input-number" value="{{$item->qty}}">
+                                        <input type="number" name="quantity" data-rowid="{{$item->rowId}}"
+                                            class="form-control input-number" value="{{$item->qty}}" 
+                                            onchange="updateQuantity(this)">
                                     </div>
                                 </div>
                             </td>
@@ -188,4 +189,22 @@
         </div>
     </div>
 </section>
+<form action="{{route('cart.update')}}" id="updateCartQty" method="POST">
+    @csrf
+    @method('put')
+    <input type="hidden" id="rowId" name="rowId">
+    <input type="hidden" id="quantity" name="quantity">
+</form>
 @endsection
+
+@push('scripts')
+<script>
+    function updateQuantity(qty){
+        $('#rowId').val($(qty).data('rowid'));
+        $('#quantity').val($(qty).val());
+        $('#updateCartQty').submit();
+
+    }
+</script>
+
+@endpush
