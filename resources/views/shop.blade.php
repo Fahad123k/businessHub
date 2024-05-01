@@ -107,9 +107,9 @@
                                         <li>
                                             <div class="form-check ps-0 custome-form-check">
                                                 <input class="checkbox_animated check-it" id="br{{$brand->id}}"
-                                                    name="brands" type="checkbox" 
+                                                    name="brands" type="checkbox"
                                                     @if(in_array($brand->id,explode(',',$q_brands)))
-                                                checked="checked" @endif value="{{$brand->id}}" 
+                                                checked="checked" @endif value="{{$brand->id}}"
                                                 onchange="filterProductsByBrand(this)"
                                                 >
                                                 <label class="form-check-label">{{$brand->name}}</label>
@@ -252,12 +252,10 @@
                                             <div class="form-check ps-0 custome-form-check">
                                                 <input class="checkbox_animated check-it" id="{{$category->id}}"
                                                     name="categories" type="checkbox" value="{{$category->id}}"
-                                                    
-                                                    
                                                     @if(in_array($category->id,explode(',',$q_categories)))
-                                                    checked="checked" @endif value="{{$brand->id}}" 
-                                                    onchange="filterProductsByCategory(this)"
-                                                    >
+                                                checked="checked" @endif value="{{$brand->id}}"
+                                                onchange="filterProductsByCategory(this)"
+                                                >
                                                 <label class="form-check-label">{{$category->name}}</label>
                                                 <p class="font-light">({{$category->products->count()}})</p>
                                             </div>
@@ -506,17 +504,19 @@
 
 
 <form id="frmFilter" method="GET">
-    @csrf
+    {{-- @csrf --}}
     <input type="hidden" name="page" id="page" value="{{$page}}" />
     <input type="hidden" name="size" id="size" value="{{$size}}" />
     <input type="hidden" name="order" id="order" value="{{$order}}" />
     <input type="hidden" name="brands" id="brands" value="{{$q_brands}}" />
     <input type="hidden" name="categories" id="categories" value="{{$q_categories}}" />
+    <input type="hidden" name="prange" id="prange" value="" />
 </form>
 @endsection
 
 @push('scripts')
 <script>
+    $(function(){  
     $("#pagesize").on("change",function(){                    
           $("#size").val($("#pagesize option:selected").val());
           $("#frmFilter").submit(); 
@@ -526,6 +526,22 @@
           $("#order").val($("#orderby option:selected").val());
           $("#frmFilter").submit(); 
     });
+
+    // price filter script
+    var $range= $('.js-range-slider');
+    instance= $range.data("ionRangeSlider");
+    instance.update({
+        from:{{$from}},
+        to:{{$to}}
+    })
+
+    $("#prange").on("change",function(){
+                setTimeout(()=>{
+                    $("#frmFilter").submit();
+                },1000);
+            });
+
+});
 
     function filterProductsByBrand(brand){
     var brands = "";

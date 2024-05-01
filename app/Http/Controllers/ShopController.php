@@ -53,29 +53,23 @@ class ShopController extends Controller
 
         $categories= Category::orderBy('name','ASC')->get();
         $q_categories=$request->query('categories');
-        $products=Product::where(function($query) use($q_brands){
-            // if q brands is exist then where clause other wise q_brands will be empty like q_brand=
-            $query->whereIn('brand_id',explode(',',$q_brands))->orwhereRaw("'".$q_brands."'=''");
-        })
-        ->where(function($query) use($q_categories){
-            // if q brands is exist then where clause other wise q_brands will be empty like q_brand=
-            $query->whereIn('category_id',explode(',',$q_categories))->orwhereRaw("'".$q_categories."'=''");
-        } )
-        ->orderBy('created_at','DESC')->orderBy($o_column, $o_order)->paginate($size);
+        $prange = $request->query("prange");
+        if(!$prange)
+            $prange = "0,500";
+        $from  = explode(",",$prange)[0];
+        $to  = explode(",",$prange)[1];
+        $products = Product::where(function($query) use($q_brands){
+                                $query->whereIn('brand_id',explode(',',$q_brands))->orWhereRaw("'".$q_brands."'=''");
+                            })
+                            ->where(function($query) use($q_categories){
+                                $query->whereIn('category_id',explode(',',$q_categories))->orWhereRaw("'".$q_categories."'=''");
+                            })
+                            ->whereBetween('regular_price',array($from,$to))
+                    ->orderBy('created_at','DESC')->orderBy($o_column,$o_order)->paginate($size);
+        return view('shop',['products'=>$products,'page'=>$page,'size'=>$size,'order'=>$order,'brands'=>$brands,'q_brands'=>$q_brands,'categories'=>$categories,'q_categories'=>$q_categories,'from'=>$from,'to'=>$to]);
       
 
-        return view('shop',
-        [
-            'products'=>$products,
-            'page'=>$page,
-            'size'=>$size,
-            'order'=>$order,
-            'brands'=>$brands,
-            'q_brands'=>$q_brands,
-            'q_categories'=>$q_categories,
-            'categories'=>$categories,
-        ]);
-
+     
         }
 
     public function productDetails($slug){
