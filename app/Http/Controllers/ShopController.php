@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
+use App\Models\Category;
 class ShopController extends Controller
 {
     //index page of shop
@@ -50,16 +51,30 @@ class ShopController extends Controller
         // check box filter for brand
         $q_brands=$request->query('brands');
 
-
+        $categories= Category::orderBy('name','ASC')->get();
+        $q_categories=$request->query('categories');
         $products=Product::where(function($query) use($q_brands){
             // if q brands is exist then where clause other wise q_brands will be empty like q_brand=
             $query->whereIn('brand_id',explode(',',$q_brands))->orwhereRaw("'".$q_brands."'=''");
+        })
+        ->where(function($query) use($q_categories){
+            // if q brands is exist then where clause other wise q_brands will be empty like q_brand=
+            $query->whereIn('category_id',explode(',',$q_categories))->orwhereRaw("'".$q_categories."'=''");
         } )
         ->orderBy('created_at','DESC')->orderBy($o_column, $o_order)->paginate($size);
       
 
         return view('shop',
-        ['products'=>$products,'page'=>$page,'size'=>$size,'order'=>$order,'brands'=>$brands,'q_brands'=>$q_brands]);
+        [
+            'products'=>$products,
+            'page'=>$page,
+            'size'=>$size,
+            'order'=>$order,
+            'brands'=>$brands,
+            'q_brands'=>$q_brands,
+            'q_categories'=>$q_categories,
+            'categories'=>$categories,
+        ]);
 
         }
 
