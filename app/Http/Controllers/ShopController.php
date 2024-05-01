@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Category;
+use Cart;
 class ShopController extends Controller
 {
     //index page of shop
@@ -58,6 +59,7 @@ class ShopController extends Controller
             $prange = "0,500";
         $from  = explode(",",$prange)[0];
         $to  = explode(",",$prange)[1];
+
         $products = Product::where(function($query) use($q_brands){
                                 $query->whereIn('brand_id',explode(',',$q_brands))->orWhereRaw("'".$q_brands."'=''");
                             })
@@ -81,4 +83,16 @@ class ShopController extends Controller
 
         return view('details',['product'=>$product,'related_products'=>$related_products]);
     }
+    public function getCartAndWishlistCount(){
+
+        $cartCount= Cart::instance('cart')->content()->count();
+        $wishlistCount= Cart::instance('wishlist')->content()->count();
+        return response()->json([
+        'status'=>200,
+        'cartCount'=>$cartCount,
+        'wishlistCount'=>$wishlistCount
+        ]);
+    }
 }
+
+

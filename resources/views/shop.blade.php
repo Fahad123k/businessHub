@@ -414,7 +414,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)" class="wishlist">
+                                            <a href="javascript:void(0)" onclick="addProductToWishlist({{$product->id}},'{{$product->name}}',1,{{ $product->regular_price}})" class="wishlist">
                                                 <i data-feather="heart"></i>
                                             </a>
                                         </li>
@@ -504,7 +504,7 @@
 
 
 <form id="frmFilter" method="GET">
-    {{-- @csrf --}}
+    @csrf
     <input type="hidden" name="page" id="page" value="{{$page}}" />
     <input type="hidden" name="size" id="size" value="{{$size}}" />
     <input type="hidden" name="order" id="order" value="{{$order}}" />
@@ -571,6 +571,45 @@ function filterProductsByCategory(category){
     });
     $("#categories").val(categories);
     $("#frmFilter").submit();
+}
+
+
+// add to wishlist
+function addProductToWishlist(id,name,quantity,price){
+    $.ajax({
+        type:"POST",
+        url:"{{route('wishlist.store')}}",
+        data:{
+            "_token":"{{csrf_token()}}",
+            id:id,
+            name:name,
+            quantity:quantity,
+            price:price
+        },
+        success:function(data){
+            if(data.status==200){
+                getCartWishlistCount();
+                $.notify({
+                    icon:"fa fa-check",
+                    title:"Success!",
+                    message:"Item has successfully added to your wishlist"
+                });
+            }
+        }
+    });
+}
+
+function getCartWishlistCount(){
+    $.ajax({
+        type:"GET",
+        url:"{{route('shop.cart.wishlist.count')}}",
+        success:function(data){
+            // alert(data)
+            console.log(data);
+            $('#cart-count').html(data.cartCount);
+            $('#wishlist-count').html(data.wishlistCount);
+        }
+    })
 }
 </script>
 

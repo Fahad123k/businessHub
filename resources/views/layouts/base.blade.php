@@ -117,8 +117,8 @@
                             <div class="menu-left">
                                 <div class="brand-logo">
                                     <a href="{{url('/')}}">
-                                        <img src="{{asset('assets/images/logo.png')}}" class="h-logo img-fluid blur-up lazyload"
-                                            alt="logo">
+                                        <img src="{{asset('assets/images/logo.png')}}"
+                                            class="h-logo img-fluid blur-up lazyload" alt="logo">
                                     </a>
                                 </div>
 
@@ -138,8 +138,10 @@
                                                 </div>
                                             </li>
                                             <li><a href="{{url('/')}}" class="nav-link menu-title">Home</a></li>
-                                            <li><a href="{{route('shop.index')}}" class="nav-link menu-title">Shop</a></li>
-                                            <li><a href="{{route('cart.index')}}" class="nav-link menu-title">Cart</a></li>
+                                            <li><a href="{{route('shop.index')}}" class="nav-link menu-title">Shop</a>
+                                            </li>
+                                            <li><a href="{{route('cart.index')}}" class="nav-link menu-title">Cart</a>
+                                            </li>
                                             <li><a href="about-us.html" class="nav-link menu-title">About Us</a></li>
                                             <li><a href="contact-us.html" class="nav-link menu-title">Contact Us</a>
                                             </li>
@@ -160,7 +162,7 @@
                                             <a href="wishlist/list.html">
                                                 <i data-feather="heart"></i>
                                                 <span id="wishlist-count" class="label label-theme rounded-pill">
-                                                    0
+                                                    {{Cart::instance('wishlist')->content()->count()}}
                                                 </span>
                                             </a>
                                         </div>
@@ -179,38 +181,40 @@
                                         <div class="cart-media name-usr">
                                             @auth
                                             <span>{{Auth::user()->name}}</span>
-                                        @endauth<i data-feather="user"></i>
+                                            @endauth<i data-feather="user"></i>
                                         </div>
                                         <div class="onhover-div profile-dropdown">
                                             <ul>
                                                 @if (Route::has('login'))
-                                                    @auth
-                                                        @if (Auth::user()->utype==='ADM')
-                                                        <li>
-                                                            <a href="{{route('admin.index')}}" class="d-block">Dashboard</a>
-                                                        </li>
-                                                        @else
-                                                        <li>
-                                                        <a href="{{route('user.index')}}" class="d-block">My Account</a>
-                                                    </li>
-                                                        @endif
-                                                        <li>
-                                                            <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('frmlogout').submit()" class="d-block">Logout</a>
-                                                            <form id="frmlogout" action="{{route('logout')}}" method="post">
-                                                            @csrf
-                                                            </form>
-                                                        </li>
-                                                        @else
-                                                        <li>
-                                                            <a href="{{route('login')}}" class="d-block">Login</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="{{route('register')}}" class="d-block">Register</a>
-                                                        </li>
-                                                    @endauth
-                                                    
+                                                @auth
+                                                @if (Auth::user()->utype==='ADM')
+                                                <li>
+                                                    <a href="{{route('admin.index')}}" class="d-block">Dashboard</a>
+                                                </li>
+                                                @else
+                                                <li>
+                                                    <a href="{{route('user.index')}}" class="d-block">My Account</a>
+                                                </li>
                                                 @endif
-                                              
+                                                <li>
+                                                    <a href="{{route('logout')}}"
+                                                        onclick="event.preventDefault(); document.getElementById('frmlogout').submit()"
+                                                        class="d-block">Logout</a>
+                                                    <form id="frmlogout" action="{{route('logout')}}" method="post">
+                                                        @csrf
+                                                    </form>
+                                                </li>
+                                                @else
+                                                <li>
+                                                    <a href="{{route('login')}}" class="d-block">Login</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{route('register')}}" class="d-block">Register</a>
+                                                </li>
+                                                @endauth
+
+                                                @endif
+
 
                                             </ul>
                                         </div>
@@ -248,8 +252,8 @@
                         <div class="footer-contact">
                             <div class="brand-logo">
                                 <a href="index.htm" class="footer-logo float-start">
-                                    <img src="{{asset('assets/images/logo.png')}}" class="f-logo img-fluid blur-up lazyload"
-                                        alt="logo">
+                                    <img src="{{asset('assets/images/logo.png')}}"
+                                        class="f-logo img-fluid blur-up lazyload" alt="logo">
                                 </a>
                             </div>
                             <ul class="contact-lists" style="clear:both;">
@@ -592,7 +596,7 @@
         });
     </script>
 
-@stack('scripts')
+    @stack('scripts')
 </body>
 
 </html>
