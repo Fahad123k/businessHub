@@ -24,6 +24,7 @@ Route::get('/product/{slug}',[ShopController::class,'productDetails'])->name('sh
 Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 Route::get('/cart-wishlist-count',[ShopController::class,'getCartAndWishlistCount'])->name('shop.cart.wishlist.count');
+Route::get('/wishlist',[WishlistController::class,'getWishlistedProducts'])->name('wishlist.list');
 
 Route::post('/cart/store',[CartController::class,'addToCart'])->name('cart.store');
 Route::put('/cart/update',[CartController::class,'updateCart'])->name('cart.update');
