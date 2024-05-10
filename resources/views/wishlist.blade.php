@@ -62,13 +62,14 @@
 
                         <tr>
                             <td>
-                                <a href="../product/details.html">
+                                <a href="{{route('shop.product.details',['slug'=>$item->model->slug])}}">
                                     <img src="{{asset('assets/images/fashion/product/front')}}/{{$item->model->image}}"
                                         class="blur-up lazyloaded" alt="">
                                 </a>
                             </td>
                             <td>
-                                <a href="../product/details.html">{{$item->model->name}}</a>
+                                <a
+                                    href="{{route('shop.product.details',['slug'=>$item->model->slug])}}">{{$item->model->name}}</a>
                                 <div class="mobile-cart-content row">
                                     <div class="col">
                                         <div class="qty-box">
@@ -79,7 +80,7 @@
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <h2>$18</h2>
+                                        <h2>${{$item->model->regular_price}}</h2>
                                     </div>
                                     <div class="col">
                                         <h2 class="td-color">
@@ -91,7 +92,7 @@
                                 </div>
                             </td>
                             <td>
-                                <h2>$18</h2>
+                                <h2>${{$item->model->regular_price}}</h2>
                             </td>
                             <td>
                                 <div class="qty-box">
@@ -193,17 +194,140 @@
 </section> --}}
 
 
+<!-- Cart Section Start -->
+<section class="wish-list-section section-b-space">
+    <div class="container">
+        @if($items->count() > 0)
+        <div class="row">
+            <div class="col-sm-12 table-responsive">
+                <table class="table cart-table wishlist-table">
+                    <thead>
+                        <tr class="table-head">
+                            <th scope="col">image</th>
+                            <th scope="col">product name</th>
+                            <th scope="col">price</th>
+                            <th scope="col">availability</th>
+                            <th scope="col">action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($items as $item)
+                        <tr>
+                            <td>
+                                <a href="{{route('shop.product.details',['slug'=>$item->model->slug])}}">
+                                    <img src="{{asset('assets/images/fashion/product/front')}}/{{$item->model->image}}"
+                                        class=" blur-up lazyload" alt="">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{route('shop.product.details',['slug'=>$item->model->slug])}}"
+                                    class="font-light">{{$item->model->name}}</a>
+                                <div class="mobile-cart-content row">
+                                    <div class="col">
+                                        <p>In Stock</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="fw-bold">${{$item->model->regular_price}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <h2 class="td-color">
+                                            <a href="javascript:void(0)" class="icon" >
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </h2>
+                                        <h2 class="td-color">
+                                            <a href="cart.php" class="icon">
+                                                <i class="fas fa-shopping-cart"></i>
+                                            </a>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="fw-bold">${{$item->model->regular_price}}</p>
+                            </td>
+                            <td>
+                                @if($item->model->stock_status == "instock")
+                                <p>In Stock</p>
+                                @else
+                                <p>Stock Out</p>
+                                @endif
+                            </td>
+                            <td>
+                                @if($item->model->stock_status == 'instock')
+                                <a href="javascript:void(0)" class="icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    {{-- hiii --}}
+                                </a>
+                                @else
+                                <a href="" class="icon disabled" >
+                                    <i class="fas fa-shopping-cart"></i>
+                                   
+                                </a>
+                                @endif
+                       
+                                <a href="javascript:void(0)" class="icon" onclick="removeFromWishList('{{$item->rowId}}')" >
+                                    <i class="fas fa-times"></i>
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-end">
+                <a href="javascript:void(0)" onclick="clearWishlist()">Clear All Items</a>
+            </div>
+        </div>
+
+
+        @else
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Your wishlist is empty ! </h2>
+                <h5 class="mt-3">Add items to it now.</h5>
+                <a href="{{route('shop.index')}}" class="btn btn-warning mt-5">Shop Now</a>
+            </div>
+        </div>
+        @endif
+    </div>
+</section>
+<!-- Cart Section End -->
+
 @foreach ($items as $item )
 
-
-{{-- {{$item->model->name}} --}}
-@php
-echo "<pre>";
-    print_r($item->model->regular_price);
-    echo "</pre>";
-    @endphp
-    
 @endforeach
+
+
+
+<form id="deleteFromWishlist" action="{{route('wishlist.remove')}}" method="POST">
+    @csrf
+    @method('delete')
+    <input type="hidden" id="rowId" name="rowId" />
+</form>
+
+<form action="{{route('wishlist.clear')}}" method="post" id="clearWishlist">
+    @csrf
+    @method('delete')
+   
+</form>
+
+@push('scripts')
+<script>
+
+    function removeFromWishList(rowId){
+        $('#rowId').val(rowId);
+       
+        $('#deleteFromWishlist').submit();
+    }
+    function clearWishlist(){
+        $('#clearWishlist').submit();
+    }
+    </script>    
+@endpush
 
 
 @endsection

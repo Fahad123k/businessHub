@@ -24,7 +24,6 @@ Route::get('/product/{slug}',[ShopController::class,'productDetails'])->name('sh
 Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 
 Route::get('/cart-wishlist-count',[ShopController::class,'getCartAndWishlistCount'])->name('shop.cart.wishlist.count');
-Route::get('/wishlist',[WishlistController::class,'getWishlistedProducts'])->name('wishlist.list');
 
 Route::post('/cart/store',[CartController::class,'addToCart'])->name('cart.store');
 Route::put('/cart/update',[CartController::class,'updateCart'])->name('cart.update');
@@ -32,7 +31,10 @@ Route::delete('/cart/remove',[CartController::class,'removeItem'])->name('cart.r
 Route::delete('/cart/clear',[CartController::class,'clearCart'])->name('cart.clear');
 
 
+Route::get('/wishlist',[WishlistController::class,'getWishlistedProducts'])->name('wishlist.list');
 Route::post('/wishlist/add',[WishlistController::class,'addProductToWishList'])->name('wishlist.store');
+Route::delete('/wishlist/remove',[WishlistController::class,'removeProductFromWishlist'])->name('wishlist.remove');
+Route::delete('/wishlist/clear',[WishlistController::class,'clearWishlist'])->name('wishlist.clear');
 
 
 Route::middleware('auth')->group(function(){

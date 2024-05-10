@@ -15,9 +15,22 @@ class WishlistController extends Controller
         return response()->json(['status'=>200,"message"=>"Success! item successfully added to your wishlist"]);
     }
 
-    public function getWishlistedProducts()
+ public function getWishlistedProducts()
 {
     $items = Cart::instance("wishlist")->content();
     return view('wishlist',['items'=>$items]);
+}
+
+
+public function removeProductFromWishlist(Request $request){
+$rowId=$request->rowId;
+Cart::instance('wishlist')->remove($rowId);
+return redirect()->route('wishlist.list');
+
+}
+
+public function clearWishlist(){
+    Cart::instance('wishlist')->destroy();
+    return redirect()->route('wishlist.list');
 }
 }
