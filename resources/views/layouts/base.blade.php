@@ -12,14 +12,14 @@
     <meta name="theme-color" content="#e87316">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Surfside Media">
+    <meta name="apple-mobile-web-app-title" content="Bird Eye">
     <meta name="msapplication-TileImage" content="{{asset('assets/images/favicon.ico')}}">
     <meta name="msapplication-TileColor" content="#FFFFFF">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Surfside Media">
-    <meta name="keywords" content="Surfside Media">
-    <meta name="author" content="Surfside Media">
+    <meta name="description" content="Bird Eye">
+    <meta name="keywords" content="Bird Eye">
+    <meta name="author" content="Bird Eye">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
     <title>eComHub</title>
@@ -34,7 +34,7 @@
     <link id="color-link" rel="stylesheet" type="text/css" href="{{asset('assets/css/demo4.css')}}">
     <style>
         .h-logo {
-            max-width: 185px !important;
+            max-width: 70px !important;
         }
 
         .f-logo {
@@ -43,7 +43,7 @@
 
         @media only screen and (max-width: 600px) {
             .h-logo {
-                max-width: 110px !important;
+                max-width: 70px !important;
             }
         }
     </style>
@@ -86,7 +86,7 @@
 
         @media (max-width:600px) {
             .h-logo {
-                max-width: 150px !important;
+                max-width: 70px !important;
             }
 
             i.sidebar-bar {
@@ -117,8 +117,14 @@
                             <div class="menu-left">
                                 <div class="brand-logo">
                                     <a href="{{url('/')}}">
-                                        <img src="{{asset('assets/images/logo.png')}}"
+                                        <div class="text">
+                                            
+                                            <img src="{{asset('assets/images/logo.png')}}"
                                             class="h-logo img-fluid blur-up lazyload" alt="logo">
+                                            {{-- <p>Bird Eye</p> --}}
+                                            <b>Bird Eye</b>
+                                        </div>
+                                       
                                     </a>
                                 </div>
 
@@ -258,14 +264,14 @@
                             </div>
                             <ul class="contact-lists" style="clear:both;">
                                 <li>
-                                    <span><b>phone:</b> <span class="font-light"> +1 0000000000</span></span>
+                                    <span><b>phone:</b> <span class="font-light"> +91 9122812078</span></span>
                                 </li>
                                 <li>
-                                    <span><b>Address:</b><span class="font-light"> NIT, Faridabad, Haryana,
+                                    <span><b>Address:</b><span class="font-light"> JanakPuri, New Delhi, Delhi,
                                             India</span></span>
                                 </li>
                                 <li>
-                                    <span><b>Email:</b><span class="font-light"> contact@surfsidemedia.in</span></span>
+                                    <span><b>Email:</b><span class="font-light"> ahmad.nishu08@gmail.com</span></span>
                                 </li>
                             </ul>
                         </div>
@@ -398,7 +404,7 @@
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-0 font-dark">© 2023, Surfside Media.</p>
+                        <p class="mb-0 font-dark">© 2024, Bird Eye.</p>
                     </div>
                 </div>
             </div>
