@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Cart;
+use Illuminate\support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -38,5 +39,50 @@ class CartController extends Controller
         return redirect()->route('cart.index');
 
     }
+    public function checkout(){
+        if(Auth::check()){
+            return rediect()->route('checkout');
+        }
+        else{
+            
+            return rediect()->route('login');
+        }
+    }
+
+    public function setAmountForCheckout(){
+        if(session()->has('coupon')){
+
+            session()->put('checkout',[
+                'discount'=>$this->discount,
+                'subtotal'=>$this->subtotalAfterDiscount,
+                'tax'=>$this->taxAfterDiscount,
+                'total'=>$this->totalAfterDiscount
+            ]);
+          
+    }
+    else{
+
+        session()->put('checkout',[
+            'discount'=>0,
+            'subtotal'=>Cart::instance('cart')->subtotal(),
+            'tax'=>Cart::instance('cart')->tax(),
+            'total'=>Cart::instance('cart')->total(),
+        ]);
+    }
+
+}
+
+public function render(){
+    if(session()->has('coupon')){
+        if(Cart::instance('cart')->subtotal()< session()->get('coupon')['cart_value']){
+            session()->forget('coupon');
+        }
+        else{
+            $this->calculateDiscount();
+        }
+    }
+    $this->setAmountForCheckout();
+    return redirect()->route('shop.index');
+}
 
 }

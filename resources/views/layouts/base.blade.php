@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/slick/slick.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/slick/slick-theme.css')}}">
     <link id="color-link" rel="stylesheet" type="text/css" href="{{asset('assets/css/demo4.css')}}">
+
     <style>
         .h-logo {
             max-width: 70px !important;
@@ -72,7 +73,8 @@
         }
 
         .name-usr {
-            background: #e87316;
+            /* background: #e87316; */
+            background: var(--theme-color);
             padding: 8px 12px;
             color: #fff;
             font-weight: bold;
@@ -256,10 +258,11 @@
                 <div class="row gy-4">
                     <div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="footer-contact">
-                            <div class="brand-logo">
+                            <div class="brand-logo footer-logo">
                                 <a href="index.htm" class="footer-logo float-start">
                                     <img src="{{asset('assets/images/logo.png')}}"
-                                        class="f-logo img-fluid blur-up lazyload" alt="logo">
+                                    class="f-logo img-fluid blur-up lazyload" alt="logo">
+                                    <b class="h2">Bird Ey                                                                                e</b>
                                 </a>
                             </div>
                             <ul class="contact-lists" style="clear:both;">
