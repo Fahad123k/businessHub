@@ -25,7 +25,7 @@ EcomHub is an E-commerce platform that allows users to browse, purchase, and man
 - php artisan migrate
 - php artisan serve
 
-#output
+## sample
 
 ![EcomHub Screenshot](public/assets/images/readme/PART-1.png)
 ![EcomHub Screenshot](public/assets/images/readme/PART-2.png)
