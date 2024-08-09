@@ -22,7 +22,7 @@
     <meta name="author" content="Bird Eye">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    <title>eComHub</title>
+    <title>BirdEye</title>
 
     <link id="rtl-link" rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/vendors/ion.rangeSlider.min.css')}}">
@@ -262,7 +262,7 @@
                                 <a href="index.htm" class="footer-logo float-start">
                                     <img src="{{asset('assets/images/logo.png')}}"
                                     class="f-logo img-fluid blur-up lazyload" alt="logo">
-                                    <b class="h2">Bird Ey                                                                                e</b>
+                                    <b class="h2">BirdEye</b>
                                 </a>
                             </div>
                             <ul class="contact-lists" style="clear:both;">
